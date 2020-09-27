@@ -1,0 +1,22 @@
+{
+  "name": "kuliahbot-discord",
+  "version": "1.0.0",
+  "description": "A bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iotatfan/kuliahbot-discord.git"
+  },
+  "author": "Iotatfan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Iotatfan/kuliahbot-discord/issues"
+  },
+  "homepage": "https://github.com/Iotatfan/kuliahbot-discord#readme",
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  }
+}
