@@ -1,0 +1,12 @@
+{
+    "Iotatfan" : [
+        {
+            "class" : "RVA",
+            "time"  : "0 10 * * 1"
+        },
+        {
+            "class" : "Test",
+            "time"  : "* * * * *"
+        }
+    ]
+}
