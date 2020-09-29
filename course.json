@@ -1,0 +1,15 @@
+{
+    "Course" : [
+        {
+            "class" : "RVA",
+            "time"  : "0 11 * * 1",
+            "users" : [
+                "Iotatfan", "Klepon"
+            ]
+        },
+        {
+            "class" : "Testing Per Minute",
+            "time"  : "* * * * *"
+        }
+    ]
+}
