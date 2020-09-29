@@ -19,11 +19,11 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     console.log('I am ready!');
-    myCourse.Course.forEach(kelas => {
+    myCourse.forEach(kelas => {
         console.log(kelas)
         cron.schedule(kelas.time, function() {
-            const ch = client.channels.cache.get('760146366151524392')
-            ch.send('Saatnya kelas ' + kelas.class)
+            const ch = client.channels.cache.get(kelas.channel)
+            ch.send('Saatnya kelas ' + kelas.class + ` ${kelas.users} `)
         })
     })
   });

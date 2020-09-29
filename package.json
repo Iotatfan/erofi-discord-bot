@@ -1,5 +1,5 @@
 {
-  "name": "kuliahbot-discord",
+  "name": "erofi-bot",
   "version": "1.0.0",
   "description": "A bot",
   "main": "index.js",
@@ -8,16 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Iotatfan/kuliahbot-discord.git"
+    "url": "git+https://github.com/Iotatfan/erofi-discord-bot.git"
   },
   "author": "Iotatfan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Iotatfan/kuliahbot-discord/issues"
+    "url": "https://github.com/Iotatfan/erofi-discord-bot/issues"
   },
-  "homepage": "https://github.com/Iotatfan/kuliahbot-discord#readme",
+  "homepage": "https://github.com/Iotatfan/erofi-discord-bot#readme",
   "dependencies": {
-    "cron": "^1.8.2",
+    "booru": "^2.3.2",
     "discord.js": "^12.3.1",
     "fs": "0.0.1-security",
     "node-cron": "^2.0.3"

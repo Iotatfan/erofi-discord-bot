@@ -2,13 +2,13 @@ const Discord = require('discord.js')
 const Booru = require('booru')
 
 module.exports = {
-    name: 'gura',
-    description: 'send gura image',
+    name: 'fubuki',
+    description: 'send fubuki image',
     execute(message) {
         // console.log(message)
         Booru.search(
             'safebooru',
-            ['gawr_gura'],
+            ['shirakami_fubuki'],
             {
                 limit: 1,
                 random: true
