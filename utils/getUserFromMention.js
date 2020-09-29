@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'extractUser',
+    name: 'getUserFromMention',
     execute(mention) {
         if (!mention) return
 

@@ -1,5 +1,8 @@
 const Discord = require('discord.js')
 const fs = require('fs')
+const courseHandler = require('../utils/courseHandler')
+
+// Options array = [ Name, Day, HH:MM, #Channel, #[Users] ]
 
 module.exports = {
     name: 'course',
@@ -11,12 +14,16 @@ module.exports = {
         var readData = fs.readFileSync(source, 'utf-8')
         var json = JSON.parse(readData)
 
+        let { courseName, cronTime, channel, users } = courseHandler.execute(options)
+        // name, day, time, channel, user = courseHandler.execute(options)
+
         // TO DO Better String Handler
+        // TO DO Day-Time Converter to CRON Format
         let course = {
-            class: options[0],
-            time: options[1],
-            channel: options[2],
-            users: options[3]
+            class: courseName,
+            time: cronTime,
+            channel: channel,
+            users: users
         }
         // let data = JSON.stringify(course)
         json.push(course)
