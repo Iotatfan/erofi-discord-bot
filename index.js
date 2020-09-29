@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 const cron = require('node-cron')
-const { PREFIX, TOKEN} = require('./config.json')
-const myCourse = require('./course.json')
+const { PREFIX, TOKEN} = require('./config/config.json')
+const myCourse = require('./src/course.json')
 const fs = require('fs')
 
 const client = new Discord.Client() 

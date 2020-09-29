@@ -9,7 +9,7 @@ module.exports = {
     description: 'add course reminder',
     execute(message, options) {
         // console.log('Arguments : ' + options)
-        source = './course.json'
+        source = './src/course.json'
         
         var readData = fs.readFileSync(source, 'utf-8')
         var json = JSON.parse(readData)
