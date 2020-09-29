@@ -1,10 +1,6 @@
-const Discord = require('discord.js')
-
 module.exports = {
-    name: 'getUserFromMention',
-    execute(mention, client) {
-        console.log()
-
+    name: 'extractUser',
+    execute(mention) {
         if (!mention) return
 
         if (mention.startsWith('<@') && mention.endsWith('>')) {
@@ -15,8 +11,7 @@ module.exports = {
                 mention = mention.slice(1)
             }
             
-            
-            return client.users.cache.get(mention)
+            return mention
         }  
     }
 }

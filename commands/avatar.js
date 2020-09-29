@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const utils = require('../utilis/extratcUser')
+const extratcUser = require('../utilis/userExtractor')
 
 module.exports = {
     name: 'ava',
@@ -9,7 +9,7 @@ module.exports = {
         if (options != '') {
             options.forEach(mentioned => {
                 console.log('Mentioned = ' + mentioned)
-                const user = utils.execute(mentioned, client)
+                const user = client.users.cache.get(extratcUser.execute(mentioned))
                 if (!user) {
                     return message.reply('Not a Valid User')
                 }

@@ -1,7 +1,6 @@
 const Discord = require('discord.js')
 const cron = require('node-cron')
 const { PREFIX, TOKEN} = require('./config.json')
-const course = require('./course')
 const myCourse = require('./course.json')
 const fs = require('fs')
 
@@ -52,22 +51,5 @@ client.on('message', message => {
     }
     
 })
-
-function getChannelFromMention(mention) {
-    console.log(mention)
-
-    if (!mention) return
-
-    if (mention.startsWith('<#') && mention.endsWith('>')) {
-        mention = mention.slice(2, -1)
-
-		if (mention.startsWith('!')) {
-			mention = mention.slice(1)
-		}
-        
-        return client.channels.cache.get(mention)
-        
-    }  
-}
 
 client.login(TOKEN)
