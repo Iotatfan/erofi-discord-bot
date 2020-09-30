@@ -1,14 +1,15 @@
 const getChannel = require('../utils/getChannel')
+const dayOfWeek = [
+    'sunday', 'monday', 'tuesday', 'wednesday', 
+    'thursday', 'frinday', 'saturfay'
+]
 
 // Options array = [ Name, Day, HH:MM, #Channel, #[Users] ]
 
 module.exports = {
     name: 'courseStringHandler',
     execute(args) {
-        const dayOfWeek = [
-            'sunday', 'monday', 'tuesday', 'wednesday', 
-            'thursday', 'frinday', 'saturfay'
-        ]
+        
         console.log(args)
 
         // Get Class Name
