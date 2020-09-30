@@ -38,6 +38,7 @@ module.exports = {
                 channel = getChannel.execute(content)
             } else if (content.startsWith('<@')) {
                 users.push(content)
+                // Refactor this
             }
         })
 

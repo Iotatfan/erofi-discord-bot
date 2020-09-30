@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 const cron = require('node-cron')
 const { PREFIX, TOKEN} = require('./config/config.json')
-const myCourse = require('./src/course.json')
+const usersExtract = require('./utils/courseUsersExtractor')
 const db = require('./config/db')
 const fs = require('fs')
 
@@ -28,11 +28,14 @@ client.once('ready', () => {
 
             data.forEach( (row, index) => {
                 console.log(row)
+                const users = usersExtract.execute(row.users)
+                console.log(users)
+
                 cron.schedule(
                     row.crontime, 
                     function() {
                         const ch = client.channels.cache.get(row.channel)
-                        ch.send('Saatnya kelas ' + row.course + ` ${row.users} `)
+                        ch.send('Saatnya kelas ' + row.course + ` ${users} `)
                 }, 
                 {
                     scheduled: true,
