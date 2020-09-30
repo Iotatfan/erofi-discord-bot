@@ -21,9 +21,15 @@ client.once('ready', () => {
     console.log('I am ready!');
     myCourse.forEach(kelas => {
         console.log(kelas)
-        cron.schedule(kelas.time, function() {
-            const ch = client.channels.cache.get(kelas.channel)
-            ch.send('Saatnya kelas ' + kelas.class + ` ${kelas.users} `)
+        cron.schedule(
+            kelas.time, 
+            function() {
+                const ch = client.channels.cache.get(kelas.channel)
+                ch.send('Saatnya kelas ' + kelas.class + ` ${kelas.users} `)
+        }, 
+        {
+            scheduled: true,
+            timezone: 'Asia/Jakarta'
         })
     })
   });
