@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const cron = require('node-cron')
 const { PREFIX, TOKEN} = require('./config/config.json')
 const myCourse = require('./src/course.json')
+const db = require('./config/db')
 const fs = require('fs')
 
 const client = new Discord.Client() 
@@ -19,20 +20,29 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     console.log('I am ready!');
-    myCourse.forEach(kelas => {
-        console.log(kelas)
-        cron.schedule(
-            kelas.time, 
-            function() {
-                const ch = client.channels.cache.get(kelas.channel)
-                ch.send('Saatnya kelas ' + kelas.class + ` ${kelas.users} `)
-        }, 
-        {
-            scheduled: true,
-            timezone: 'Asia/Jakarta'
+    
+    db.client
+        .query('select * from courses')
+        .then(res => {
+            const data = res.rows
+
+            data.forEach( (row, index) => {
+                console.log(row)
+                cron.schedule(
+                    row.crontime, 
+                    function() {
+                        const ch = client.channels.cache.get(row.channel)
+                        ch.send('Saatnya kelas ' + row.course + ` ${row.users} `)
+                }, 
+                {
+                    scheduled: true,
+                    timezone: 'Asia/Jakarta'
+                })
+            })
         })
-    })
-  });
+        .catch(e => console.log(e))
+    
+  })
   
 
 client.on('message', message => {

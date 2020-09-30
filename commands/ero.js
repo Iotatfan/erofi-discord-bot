@@ -6,6 +6,7 @@ module.exports = {
     description: 'unrestricted search',
     execute(message, options) {
         // console.log(message)
+        
         Booru.search(
             'danbooru',
             [options[0]],
@@ -21,6 +22,7 @@ module.exports = {
             })
             .catch ( err => {
                 console.log(err)
+                message.channel.send('UUuuu yang dicari ga ketemu ....')
             })
     }
 }
