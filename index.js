@@ -23,7 +23,7 @@ client.once('ready', () => {
     .query('select * from courses')
     .then(res => {
         const data = res.rows
-        scheduleCourse.execute(data)
+        scheduleCourse.execute(data, client)
         
     })
     .catch(e => console.log('Error Fetching DB ' + e))

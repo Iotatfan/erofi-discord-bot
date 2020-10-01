@@ -1,10 +1,9 @@
 const cron = require('node-cron')
-const client = require('discord.js')
 const usersExtract = require('../utils/courseUsersExtractor')
 
 module.exports = {
     name: 'scheduleCourse',
-    execute(data) {
+    execute(data, client) {
         data.forEach( (row, index) => {
             console.log(row)
             const users = usersExtract.execute(row.users)
