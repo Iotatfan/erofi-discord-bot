@@ -1,9 +1,8 @@
 const Discord = require('discord.js')
-const cron = require('node-cron')
 const { PREFIX, TOKEN} = require('./config/config.json')
-const usersExtract = require('./utils/courseUsersExtractor')
 const db = require('./config/db')
 const fs = require('fs')
+const scheduleCourse = require('./utils/scheduleCourse')
 
 const client = new Discord.Client() 
 client.commands = new Discord.Collection()
@@ -19,33 +18,18 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
-    console.log('I am ready!');
     
     db.client
-        .query('select * from courses where ')
-        .then(res => {
-            const data = res.rows
-
-            data.forEach( (row, index) => {
-                console.log(row)
-                const users = usersExtract.execute(row.users)
-                console.log(users)
-
-                cron.schedule(
-                    row.crontime, 
-                    function() {
-                        const ch = client.channels.cache.get(row.channel)
-                        ch.send('Saatnya kelas ' + row.course + ` ${users} `)
-                }, 
-                {
-                    scheduled: true,
-                    timezone: 'Asia/Jakarta'
-                })
-            })
-        })
-        .catch(e => console.log(e))
+    .query('select * from courses')
+    .then(res => {
+        const data = res.rows
+        scheduleCourse.execute(data)
+        
+    })
+    .catch(e => console.log('Error Fetching DB ' + e))
     
-  })
+    console.log('I am ready!');
+})
   
 
 client.on('message', message => {

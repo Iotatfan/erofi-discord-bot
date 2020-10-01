@@ -1,9 +1,8 @@
 const Discord = require('discord.js')
-const fs = require('fs')
-const myCourse = require('../src/course.json')
 const courseHandler = require('../utils/courseHandler')
 const cronstrue = require('cronstrue')
 const db = require('../config/db')
+const scheduleCourse = require('../utils/scheduleCourse')
 
 // Options array = [ Name, Day, HH:MM, #Channel, #[Users] ]
 
@@ -11,11 +10,7 @@ module.exports = {
     name: 'course',
     description: 'add course reminder',
     execute(message, options) {
-        // console.log('Arguments : ' + options)
-        // source = './src/course.json'
         
-        // var readData = fs.readFileSync(source, 'utf-8')
-        // var json = JSON.parse(readData)
         let server = message.guild.id
         console.log(server)
         
@@ -45,7 +40,6 @@ module.exports = {
             
         } else {
             let { courseName, cronTime, channel, users } = courseHandler.execute(options)
-            // name, day, time, channel, user = courseHandler.execute(options)
     
             // TO DO Better String Handler
             // TO DO Day-Time Converter to CRON Format
@@ -56,7 +50,11 @@ module.exports = {
 
                 db.client
                     .query(text, values)
-                    .then(res => console.log(res.rows[0]))
+                    .then(res => {
+                        console.log(res.rows[0])
+                        const data = res.rows[0]
+                        scheduleCourse(data)
+                    })
                     .catch(e => console.log(e))
 
                 message.reply('Kelas Berhasil Ditambahkan')
