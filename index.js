@@ -22,7 +22,7 @@ client.once('ready', () => {
     console.log('I am ready!');
     
     db.client
-        .query('select * from courses')
+        .query('select * from courses where ')
         .then(res => {
             const data = res.rows
 
