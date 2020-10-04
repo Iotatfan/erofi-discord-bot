@@ -1,39 +1,19 @@
 const cron = require('node-cron')
-const Discord = require('discord.js')
-const Booru = require('booru')
+const booru = require('../commands/booru/booru')
 
 module.exports = {
     name: 'scheduleBooru',
-    execute(tag, channel, client) {  
-        console.log(channel)
+    execute(message, tags, targetCh, client) {  
+        console.log(targetCh)
 
         cron.schedule(
             '0 * * * *',         // Change it to dynamic later
             function() {
-                Booru.search(
-                    'safebooru',
-                    [tag],
-                    {
-                        limit: 1,
-                        random: true
-                    })
-                    .then(posts => {
-                        for (let post of posts) {
-                            const attachment = new Discord.MessageAttachment(post.fileUrl)
-                            const ch = client.channels.cache.get(channel)
-                            ch.send(attachment)
-                        }
-                    })
-                    .catch ( err => {
-                        console.log(err)
-                        const ch = client.channels.cache.get(channel)
-                        ch.send('Gagal ngirim :(')
-                    })
-        }, 
-        {
-            scheduled: true,
-            timezone: 'Asia/Jakarta'
-        })
-        
+                booru.execute(message, tags, targetCh, client)
+            }, 
+            {
+                scheduled: true,
+                timezone: 'Asia/Jakarta'
+            })
     }
 }

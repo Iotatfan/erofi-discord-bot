@@ -1,12 +1,13 @@
 const cron = require('node-cron')
-const usersExtract = require('../utils/courseUsersExtractor')
+const courseUsersExtractor = require('./courseUsersExtractor')
 
 module.exports = {
-    name: 'scheduleCourse',
+    name: 'schedule course',
     execute(data, client) {
         data.forEach( (row, index) => {
+            console.log('Schedule')
             console.log(row)
-            const users = usersExtract.execute(row.users)
+            const users = courseUsersExtractor.execute(row.users)
 
             cron.schedule(
                 row.crontime, 

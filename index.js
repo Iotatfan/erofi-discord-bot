@@ -1,8 +1,8 @@
 const Discord = require('discord.js')
-const { PREFIX, TOKEN} = require('./config/config.json')
-const db = require('./config/db')
+const { PREFIX, TOKEN} = require('./config/config')
 const fs = require('fs')
-const scheduleCourse = require('./utils/scheduleCourse')
+const { cronCourse } = require('./db/coursedb')
+const { scheduleCourse } = require('./utils')
 
 const client = new Discord.Client() 
 client.commands = new Discord.Collection()
@@ -19,20 +19,16 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     
-    db.client
-    .query('select * from courses')
-    .then(res => {
-        const data = res.rows
-        scheduleCourse.execute(data, client)
-        
+    cronCourse((err, res) => {
+        let data = res.rows
+        scheduleCourse.execute(data, client)   
     })
-    .catch(e => console.log('Error Fetching DB ' + e))
-    
+     
     console.log('I am ready!');
 })
   
 
-client.on('message', message => {
+client.on('message', async message => {
     if (!message.content.startsWith(PREFIX) || message.author.bot ) return
     
     const commandBody = message.content.slice(PREFIX.length)

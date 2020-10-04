@@ -2,6 +2,7 @@ module.exports = {
     name: 'courseUsersExtractor',
     description: 'convert users string into array',
     execute(mention) {
+        // console.log(mention)
         if (!mention) return
 
         if (mention.startsWith('{') && mention.endsWith('}')) {
