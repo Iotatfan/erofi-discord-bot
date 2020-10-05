@@ -5,7 +5,7 @@ module.exports = {
     name: 'booru',
     description: 'search image in booru',
     execute(message, tags, targetCh, client, site = 'safebooru') {
-        // console.log(message)
+        console.log(targetCh)
         Booru.search(
             site,
             [tags],
@@ -15,7 +15,7 @@ module.exports = {
             })
             .then(posts => {
                 for (let post of posts) {
-                    if (!targetCh && !client) {
+                    if (targetCh && client) {
                         const attachment = new Discord.MessageAttachment(post.fileUrl)
                         const ch = client.channels.cache.get(targetCh)
                         ch.send(attachment)

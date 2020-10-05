@@ -3,17 +3,21 @@ const booru = require('../commands/booru/booru')
 
 module.exports = {
     name: 'scheduleBooru',
-    execute(message, tags, targetCh, client) {  
-        console.log(targetCh)
+    execute(message, data, client, site = 'safebooru') {  
 
-        cron.schedule(
-            '0 * * * *',         // Change it to dynamic later
-            function() {
-                booru.execute(message, tags, targetCh, client)
-            }, 
-            {
-                scheduled: true,
-                timezone: 'Asia/Jakarta'
-            })
+        data.forEach( (row, index) => {
+            console.log(row)
+
+            cron.schedule(
+                '0 * * * *',         // Change it to dynamic later
+                function() {
+                    booru.execute(message, row.tag, row.channel, client, site)
+                }, 
+                {
+                    scheduled: true,
+                    timezone: 'Asia/Jakarta'
+                })
+        })
+
     }
 }

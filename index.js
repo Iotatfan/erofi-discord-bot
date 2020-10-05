@@ -2,7 +2,8 @@ const Discord = require('discord.js')
 const { PREFIX, TOKEN} = require('./config/config')
 const fs = require('fs')
 const { cronCourse } = require('./db/coursedb')
-const { scheduleCourse } = require('./utils')
+const { cronBooru } = require('./db/autoboorudb')
+const { scheduleCourse, scheduleBooru } = require('./utils')
 
 const client = new Discord.Client() 
 client.commands = new Discord.Collection()
@@ -23,12 +24,19 @@ client.once('ready', () => {
         let data = res.rows
         scheduleCourse.execute(data, client)   
     })
+    cronBooru((err, res) => {
+        if (err) console.log(err)
+        else {
+            let data = res.rows
+            scheduleBooru.execute(null, data, client)
+        }
+    })
      
     console.log('I am ready!');
 })
   
 
-client.on('message', async message => {
+client.on('message', message => {
     if (!message.content.startsWith(PREFIX) || message.author.bot ) return
     
     const commandBody = message.content.slice(PREFIX.length)

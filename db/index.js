@@ -13,7 +13,7 @@ pool.connect();
 console.log('Connecting to db . . . . .')
 
 module.exports = {
-    query: async (text, params, callback) => {
+    query: (text, params, callback) => {
         return pool.query(text, params, (callback))
     }
 }
