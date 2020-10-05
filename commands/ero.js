@@ -6,7 +6,7 @@ module.exports = {
     name: 'ero',
     description: 'unrestricted search',
     execute(message, options, client) {
-        // console.log(message)
+        console.log('Params ' + options)
         const tags = options[0]
         
         if (!options[2]) targetCh = message.channel.id
@@ -16,15 +16,13 @@ module.exports = {
         const values = [targetCh, tags, server]
 
         if (options[1] == 'auto') {
-            if (options[0] == 'auto') {
-                addBooru(values, (err, res) => {
-                    if (err) console.log(err)
-                    else {
-                        const data = res.rows
-                        scheduleBooru.execute(message, data, client, 'danbooru')
-                    }
-                })
-            }
+            addBooru(values, (err, res) => {
+                if (err) console.log(err)
+                else {
+                    const data = res.rows
+                    scheduleBooru.execute(message, data, client, 'danbooru')
+                }
+            })
         } else {
             booru.execute(message, tags, targetCh, client, 'danbooru')
         }
