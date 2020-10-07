@@ -1,5 +1,5 @@
 const { addBooru } = require('../db/autoboorudb')
-const { scheduleBooru } = require('../utils/')
+const { getChannel, scheduleBooru } = require('../utils/')
 const booru = require('./booru/booru')
 
 module.exports = {

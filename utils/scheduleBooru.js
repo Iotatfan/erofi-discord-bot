@@ -9,7 +9,7 @@ module.exports = {
             console.log(row)
 
             cron.schedule(
-                '0 * * * *',         // Change it to dynamic later
+                '0 6-20 * * *',         // Change it to dynamic later
                 function() {
                     booru.execute(message, row.tag, row.channel, client, site)
                 }, 
