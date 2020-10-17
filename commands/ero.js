@@ -13,18 +13,23 @@ module.exports = {
         else targetCh = options[2].startsWith('<#') ? getChannel.execute(options[2]) : message.channel.id
 
         const server = message.guild.id
-        const values = [targetCh, tags, server]
+        
+        let sauce = options[3]!=null ? options[3] : 'danbooru'
+        sauce = sauce == 'safe' ? 'safebooru' : 'danbooru'
+        console.log(sauce)
+        
+        const values = [targetCh, tags, server, sauce]
 
         if (options[1] == 'auto') {
             addBooru(values, (err, res) => {
                 if (err) console.log(err)
                 else {
                     const data = res.rows
-                    scheduleBooru.execute(message, data, client, 'danbooru')
+                    scheduleBooru.execute(message, data, client, sauce)
                 }
             })
         } else {
-            booru.execute(message, tags, targetCh, client, 'danbooru')
+            booru.execute(message, tags, targetCh, client, sauce)
         }
     }
 }

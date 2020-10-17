@@ -59,4 +59,13 @@ client.on('message', message => {
     
 })
 
+// client.on('messageDelete', message => {
+//     if (message.author.bot) return
+
+//     let author = `<@!${message.author.id}>`
+//     // console.log(author)
+
+//     message.channel.send(`${author} Says : ${message.content}`)
+// })
+
 client.login(TOKEN)

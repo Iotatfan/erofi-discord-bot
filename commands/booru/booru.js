@@ -15,18 +15,30 @@ module.exports = {
             })
             .then(posts => {
                 for (let post of posts) {
+
+                    const embed = new Discord.MessageEmbed()
+                        .setImage(post.fileUrl)
+                        .addFields(
+                            { name: 'Rating : ', value: post.rating, inline: true},
+                            { name: 'Post : ', value: post.postView },
+                            { name: 'Sauce : ', value: post.source!=null ? post.source : 'Sauce di Post' }
+                        )
                     if (targetCh && client) {
-                        const attachment = new Discord.MessageAttachment(post.fileUrl)
+                        // const attachment = new Discord.MessageAttachment(post.fileUrl)
                         const ch = client.channels.cache.get(targetCh)
-                        ch.send(attachment)
+                        ch.send(embed)
                     } else {
-                        const attachment = new Discord.MessageAttachment(post.fileUrl)
-                        message.channel.send(attachment)
+                        // const attachment = new Discord.MessageAttachment(post.fileUrl)
+                        message.channel.send(embed)
                     }
                 }
             })
             .catch ( err => {
-                console.log(err)
+                if (err instanceof BooruError) {
+                    console.error(err.message)
+                } else {
+                    console.error(err)
+                }
                 message.channel.send('Ga ketemu :(')
             })
     }
