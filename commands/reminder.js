@@ -1,11 +1,11 @@
 
-const { addCourse, listCourse } = require('./course/')
+const { addReminder, listReminder } = require('./reminder/')
 
 // Options array = [ Name, Day, HH:MM, #Channel, #[Users] ]
 
 module.exports = {
-    name: 'course',
-    description: 'course reminder',
+    name: 'reminder',
+    description: 'Reminder',
     execute(message, options, client) {
         const subCommand = options[0]
 
@@ -15,10 +15,10 @@ module.exports = {
         console.log(server)
         
         if (options[0] == 'list') {
-            listCourse.execute(message, server)
+            listReminder.execute(message, server)
             
         } else {
-            addCourse.execute(message, options, client, server)
+            addReminder.execute(message, options, client, server)
         }
     }
 }

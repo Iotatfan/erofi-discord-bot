@@ -1,10 +1,10 @@
 const scheduleBooru = require('./scheduleBooru');
 
 module.exports = {
-    courseHandler: require('./courseHandler'),
-    courseUsersExtractor: require('./courseUsersExtractor'),
+    reminderHandler: require('./reminderHandler'),
+    usersExtractor: require('./usersExtractor'),
     getChannel: require('./getChannel'),
     getUserFromMention: require('./getUserFromMention'),
     scheduleBooru: require('./scheduleBooru'),
-    scheduleCourse: require('./scheduleCourse')
+    scheduleReminder: require('./scheduleReminder')
 }

@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'courseUsersExtractor',
+    name: 'usersExtractor',
     description: 'convert users string into array',
     execute(mention) {
         // console.log(mention)

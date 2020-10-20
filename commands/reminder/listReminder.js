@@ -1,17 +1,17 @@
 const cronstrue = require('cronstrue')
 const Discord = require('discord.js')
-const { listCourse } = require('../../db/coursedb')
+const { listReminder } = require('../../db/reminderdb')
 
 module.exports = {
-    name: 'list course',
+    name: 'list reminder',
     execute(message, server) {
-        listCourse(server, (err, res ) => {
+        listReminder(server, (err, res ) => {
             if (err) {
                 console.log(err)
             }
 
             let embed = new Discord.MessageEmbed()
-                        .setTitle('Daftar Kelas Di Server Ini')
+                        .setTitle('Daftar Reminder Di Server Ini')
     
             const data = res.rows
 

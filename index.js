@@ -1,9 +1,9 @@
 const Discord = require('discord.js')
 const { PREFIX, TOKEN} = require('./config/config')
 const fs = require('fs')
-const { cronCourse } = require('./db/coursedb')
+const { cronReminder } = require('./db/reminderdb')
 const { cronBooru } = require('./db/autoboorudb')
-const { scheduleCourse, scheduleBooru } = require('./utils')
+const { scheduleReminder, scheduleBooru } = require('./utils')
 
 const client = new Discord.Client() 
 client.commands = new Discord.Collection()
@@ -20,9 +20,9 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     
-    cronCourse((err, res) => {
+    cronReminder((err, res) => {
         let data = res.rows
-        scheduleCourse.execute(data, client)   
+        scheduleReminder.execute(data, client)   
     })
     cronBooru((err, res) => {
         if (err) console.log(err)

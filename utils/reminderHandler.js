@@ -1,4 +1,4 @@
-const getChannel = require('../utils/getChannel')
+const getChannel = require('./getChannel')
 const dayOfWeek = [
     'sunday', 'monday', 'tuesday', 'wednesday', 
     'thursday', 'frinday', 'saturday'
@@ -7,7 +7,7 @@ const dayOfWeek = [
 // Options array = [ Name, Day, HH:MM, #Channel, #[Users] ]
 
 module.exports = {
-    name: 'courseStringHandler',
+    name: 'remindertringHandler',
     execute(args) {
         
         console.log(args)
