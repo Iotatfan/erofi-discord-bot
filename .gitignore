@@ -1,2 +1,5 @@
 node_modules
 config/config.js
+ffmpeg.exe
+ffplay.exe
+ffprobe.exe
