@@ -11,7 +11,7 @@ module.exports = {
             site = row.source!=null ? row.source : sauce
 
             cron.schedule(
-                '0 6-20 * * *',         // Change it to dynamic later
+                '0 6-20/2 * * *',         // Change it to dynamic later
                 function() {
                     booru.execute(message, row.tag, row.channel, client, sauce)
                 }, 

@@ -1,10 +1,10 @@
 const { addBooru } = require('../db/autoboorudb')
-const { getChannel, scheduleBooru } = require('../utils/')
+const { getChannel, scheduleBooru } = require('../utils')
 const booru = require('./booru/booru')
 
 module.exports = {
-    name: 'ero',
-    description: 'unrestricted search',
+    name: 'booru',
+    description: `Search image from booru sites \n **k!booru [booru_tag] <lewd/safe>** \n **k!booru auto [booru_tag] [channel] <lewd/safe>**`,
     execute(message, options, client) {
         console.log('Params ' + options)
         // Refactor Later

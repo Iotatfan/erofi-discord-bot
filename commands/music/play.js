@@ -51,6 +51,8 @@ module.exports = {
             url: songInfo.videoDetails.video_url,
             thumbnail: songInfo.videoDetails.thumbnail.thumbnails[0].url
         }
+
+        // console.log(songInfo)
         this.queue(song, message)
         message.channel.send(`Added to queueu : **${song.title}**`)
         
@@ -58,7 +60,7 @@ module.exports = {
     async parsePlaylist(url, message) {
         console.log('Parse Playlist')
         ytpl.getPlaylistID(url).then(playlistID => {
-            console.log(playlistID)
+            // console.log(playlistID)npm
             ytpl(playlistID).then(playlist => {
                 playlist.items.forEach( video => {
                     // console.log(video)
@@ -72,6 +74,9 @@ module.exports = {
                 message.channel.send(`Playlist added to queue`)
             })
         })
+    },
+    async search() {
+        
     },
     async queue(song, message) {
         // console.log('Added to queue')
@@ -108,7 +113,6 @@ module.exports = {
                 highWaterMark: 1 << 25
             }))
             .on('finish', () => {
-                console.log('Playing music')
                 serverQueue.songs.shift()
                 this.play(serverQueue.songs[0], message)
             })
@@ -117,52 +121,57 @@ module.exports = {
                 message.channel.send('```' + err + '```')
                 
                 if (err.code == 'EPIPE') return this.play(serverQueue.songs[0], message)
-
-                this.skip(serverQueue)
+                
+                this.play(serverQueue.songs[0], message)
             })
+        console.log('Playing music')
         message.channel.send(`Playing : **${song.title}**`)
     },
     skip(serverQueue) {
+        const { connection } = serverQueue
         console.log('Skipping song')
         serverQueue.connection.dispatcher.end()
     },
     shuffle(serverQueue, message) {
-        // const serverQueue = queue.get(message.guild.id) 
-        if (serverQueue.songs.length < 3) return
-        console.log(serverQueue.songs.length)
+        const { songs } = serverQueue
+
+        if (songs.length < 3) return
+        console.log(songs.length)
         console.log('Shuffling queue')
         message.channel.send('Shuffling queue')
 
-        for(let i = serverQueue.songs.length - 1; i > 1; --i) {
+        for(let i = songs.length - 1; i > 1; --i) {
             const j = Math.ceil(Math.random() * i)
-            const temp = serverQueue.songs[i]
-            serverQueue.songs[i] = serverQueue.songs[j]
-            serverQueue.songs[j] = temp
+            const temp = songs[i]
+            songs[i] = songs[j]
+            songs[j] = temp
         }
-        // console.log(serverQueue.songs[1])
+        // console.log(songs[1])
     },
     list(serverQueue, message) {
-        console.log(serverQueue.songs[0])
+        const { songs } = serverQueue
+
         let embed = new Discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle('Now Playing')
-            .setThumbnail(serverQueue.songs[0].thumbnail)
-            .setURL(serverQueue.songs[0].url)
-            .setDescription(`${serverQueue.songs[0].title}`)
+            .setThumbnail(songs[0].thumbnail)
+            .setURL(songs[0].url)
+            .setDescription(`${songs[0].title}`)
             .addFields(
                 {name: '\u200B', value:'\u200B', inline: false },
                 {name: 'Up Next', value:'\u200B', inline: false }
             )
-        let length = serverQueue.songs.length
+        let length = songs.length
         if (length > 11) length = 11
         if (length > 1) {
             for (let i = 1; i < length; i++) {
-                embed.addField(`${i}.  ${serverQueue.songs[i].title}`, `\u200B`, false)
+                embed.addField(`${i}.  ${songs[i].title}`, `\u200B`, false)
             }
         } 
         message.channel.send(embed)
     },
     stop(serverQueue) {
+        
         console.log('Stopping Music')
         serverQueue.songs = []
         serverQueue.connection.dispatcher.end()
