@@ -2,8 +2,9 @@ const Discord = require('discord.js')
 const getUserFromMention = require('../utils/getUserFromMention')
 
 module.exports = {
-    name: 'ava',
-    description: 'show user avatar',
+    name: 'Avatar',
+    usage: 'ava',
+    description: 'Show user avatar \n**~ava <tag_user>**',
     execute(message, options, client) {
         console.log('Users Collection = ' + options)
         if (options != '') {

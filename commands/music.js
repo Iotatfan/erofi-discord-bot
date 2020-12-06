@@ -1,21 +1,28 @@
-const { play }= require('./music/')
+const { play } = require('./music/')
+const { PREFIX } = require('../config/config')
+
+const usage = 'play'
 
 module.exports = {
-    name: 'music',
-    description: 'Stream music from youtube \n**k!music [yt_link]** \n**k!music skip** to skip \n**k!music stop** to stop ',
+    name: 'Play Music',
+    usage: usage,
+    description: `Stream music from youtube \n**${PREFIX}${usage} [yt_link]**
+                    \n**${PREFIX}${usage} skip** to skip 
+                    \n**${PREFIX}${usage} stop** to stop
+                    \n**${PREFIX}${usage} list** to show queue list`,
     async execute(message, options, client) {
 
         const subCommand = options[0]
 
         const voiceChannel = message.member.voice.channel
         if (!voiceChannel) return message.channel.send(
-            "Masuk VC dulu bang"
+            "Please enter the voice channel first, I'll follow you"
         )
         
         const permissions = voiceChannel.permissionsFor(message.client.user)
         if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) 
             return message.channel.send(
-                "Ga punya permission bang"
+                "I don't have the permission to join voice channel"
             )
 
         play.check(voiceChannel, message, subCommand)

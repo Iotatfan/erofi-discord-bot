@@ -1,13 +1,12 @@
 const cron = require('node-cron')
 const booru = require('../commands/booru/booru')
+const { TZ } = require('../config/config')
 
 module.exports = {
     name: 'scheduleBooru',
     execute(message, data, client, sauce) {  
 
         data.forEach( (row, index) => {
-            console.log(row)
-            
             site = row.source!=null ? row.source : sauce
 
             cron.schedule(
@@ -17,9 +16,8 @@ module.exports = {
                 }, 
                 {
                     scheduled: true,
-                    timezone: 'Asia/Jakarta'
+                    timezone: TZ
                 })
         })
-
     }
 }

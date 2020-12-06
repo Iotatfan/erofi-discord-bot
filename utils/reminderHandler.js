@@ -9,8 +9,6 @@ const dayOfWeek = [
 module.exports = {
     name: 'remindertringHandler',
     execute(args) {
-        
-        console.log(args)
 
         // Get Class Name
         var courseName = args[0]
@@ -30,7 +28,6 @@ module.exports = {
         var channel = null
         var users = []
         args.forEach( content => {
-            // console.log(content)
             if (content.includes(':')) {
                 var time = content.split(':')
                 cronTime = `${time[1]} ${time[0]} * * ${day}`

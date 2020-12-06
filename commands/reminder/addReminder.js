@@ -5,11 +5,11 @@ module.exports = {
     name: 'add reminder',
     execute(message, options, client, server) {
 
-        let { courseName, cronTime, channel, users } = reminderHandler.execute(options)
+        let { remindMessage, cronTime, channel, users } = reminderHandler.execute(options)
     
             // TO DO Better String Handler
             // TO DO Day-Time Converter to CRON Format
-        const values = [courseName, cronTime, channel, users, server]
+        const values = [remindMessage, cronTime, channel, users, server]
 
         addReminder(values, (err, res) => {
             if (err) {

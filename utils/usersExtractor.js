@@ -2,7 +2,7 @@ module.exports = {
     name: 'usersExtractor',
     description: 'convert users string into array',
     execute(mention) {
-        // console.log(mention)
+
         if (!mention) return
 
         if (mention.startsWith('{') && mention.endsWith('}')) {
@@ -15,10 +15,8 @@ module.exports = {
                 user = user.slice(1,-1)
                 users.push(user)
             });
-
-            console.log(users)
             
             return users
-        }  else return mention
+        } else return mention
     }
 }

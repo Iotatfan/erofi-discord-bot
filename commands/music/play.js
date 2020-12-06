@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl")
+const ytsr = require('ytsr')
 const queue = new Map()
 let queueConstruct = null
 
@@ -8,7 +9,7 @@ let queueConstruct = null
 
 module.exports = {
     name: 'play',
-    async check(voiceChannel, message, subCommand) {
+    async check(voiceChannel, message, query) {
         const serverQueue = queue.get(message.guild.id);
 
         if (!serverQueue) {
@@ -19,26 +20,26 @@ module.exports = {
                 vc: voiceChannel,
                 connection: null
             }
+            queue.set(message.guild.id, queueConstruct)
         }
-        queue.set(message.guild.id, queueConstruct)
 
-        switch(subCommand) {
+        switch(query) {
             case 'stop':
-                this.stop(serverQueue)
+                this.stop(message)
                 break
             case 'skip':
-                this.skip(serverQueue)
+                this.skip(message)
                 break
             case 'shuffle':
-                this.shuffle(serverQueue, message)
+                this.shuffle(message)
                 break
             case 'list':
-                this.list(serverQueue, message)
+                this.list(message)
                 break
             default:
-                if (ytdl.validateURL(subCommand)) this.parseVideo(subCommand, message)
-                else if (ytpl.validateID(subCommand)) this.parsePlaylist(subCommand, message)
-                else message.channel.send('Command music apaan itu')
+                if (ytdl.validateURL(query)) this.parseVideo(query, message)
+                else if (ytpl.validateID(query)) message.channel.send(`Playlist parser is currently under construction`) //this.parsePlaylist(query, message)
+                else this.search(query, message)
         }
         
     },
@@ -54,7 +55,7 @@ module.exports = {
 
         // console.log(songInfo)
         this.queue(song, message)
-        message.channel.send(`Added to queueu : **${song.title}**`)
+        message.channel.send(`Added to queue : **${song.title}**`)
         
     },
     async parsePlaylist(url, message) {
@@ -75,8 +76,25 @@ module.exports = {
             })
         })
     },
-    async search() {
-        
+    search(text, message) {
+        console.log(`Searcing for ${text}`)
+        // Not Yet Working
+
+        ytsr.getFilters('github').then(async (filters1) => {
+            console.log('masuk sini')
+            const filter1 = filters1.get('Type').find(o => o.name === 'Video');
+            const filters2 = await ytsr.getFilters(filter1.ref);
+            const filter2 = filters2.get('Duration').find(o => o.name.startsWith('Short'));
+            const options = {
+              limit: 5,
+              nextpageRef: filter2.ref,
+            }
+            const searchResults = await ytsr(null, options);
+            dosth(searchResults);
+          }).catch(err => {
+            console.error(err);
+          });
+
     },
     async queue(song, message) {
         // console.log('Added to queue')
@@ -127,12 +145,14 @@ module.exports = {
         console.log('Playing music')
         message.channel.send(`Playing : **${song.title}**`)
     },
-    skip(serverQueue) {
+    skip(message) {
+        const serverQueue = queue.get(message.guild.id) 
         const { connection } = serverQueue
         console.log('Skipping song')
         serverQueue.connection.dispatcher.end()
     },
-    shuffle(serverQueue, message) {
+    shuffle(message) {
+        const serverQueue = queue.get(message.guild.id) 
         const { songs } = serverQueue
 
         if (songs.length < 3) return
@@ -148,11 +168,13 @@ module.exports = {
         }
         // console.log(songs[1])
     },
-    list(serverQueue, message) {
+    list(message) {
+        // console.log(queue)
+        const serverQueue = queue.get(message.guild.id) 
         const { songs } = serverQueue
 
         let embed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
+            .setColor('00FF00')
             .setTitle('Now Playing')
             .setThumbnail(songs[0].thumbnail)
             .setURL(songs[0].url)
@@ -170,8 +192,9 @@ module.exports = {
         } 
         message.channel.send(embed)
     },
-    stop(serverQueue) {
-        
+    stop(message) {
+        const serverQueue = queue.get(message.guild.id) 
+
         console.log('Stopping Music')
         serverQueue.songs = []
         serverQueue.connection.dispatcher.end()

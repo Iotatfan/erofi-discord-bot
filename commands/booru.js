@@ -1,10 +1,14 @@
+const { PREFIX } = require('../config/config')
 const { addBooru } = require('../db/autoboorudb')
 const { getChannel, scheduleBooru } = require('../utils')
 const booru = require('./booru/booru')
 
+const usage = 'booru'
+
 module.exports = {
-    name: 'booru',
-    description: `Search image from booru sites \n **k!booru [booru_tag] <lewd/safe>** \n **k!booru auto [booru_tag] [channel] <lewd/safe>**`,
+    name: 'Booru Image Search',
+    usage: booru,
+    description: `Search image from booru sites \n **${PREFIX}${usage} [booru_tag] <lewd/safe>** \n **${PREFIX}${usage} auto [booru_tag] [channel] <lewd/safe>**`,
     execute(message, options, client) {
         console.log('Params ' + options)
         // Refactor Later
@@ -25,12 +29,12 @@ module.exports = {
             addBooru(values, (err, res) => {
                 if (err) {
                     console.log(err)
-                    message.channel.send('Erofi gagal cari :(')
+                    message.channel.send('Searching images failed succesfully :(')
                 }
                 else {
                     const data = res.rows
                     scheduleBooru.execute(message, data, client, sauce)
-                    message.channel.send('Berhasil Ditambahkan Ke List')
+                    message.channel.send('Added to List')
                 }
             })
         } else {

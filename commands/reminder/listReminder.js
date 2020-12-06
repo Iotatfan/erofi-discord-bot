@@ -11,7 +11,8 @@ module.exports = {
             }
 
             let embed = new Discord.MessageEmbed()
-                        .setTitle('Daftar Reminder Di Server Ini')
+                        .setTitle('List of Reminder in This Server')
+                        .setColor('00FF00')
     
             const data = res.rows
 

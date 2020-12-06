@@ -1,7 +1,6 @@
 module.exports = {
     name: 'getChannel',
     execute(mention) {
-        // console.log(mention)
 
         if (!mention) return
 
