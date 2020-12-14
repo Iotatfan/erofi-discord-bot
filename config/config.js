@@ -1,9 +1,9 @@
 require('dotenv').config()
 
-let PREFIX = process.env.PREFIX
-let TOKEN = process.env.TOKEN 
-let DATABASE_URL = process.env.DATABASE_URL
-let TZ = process.env.TZ
+const PREFIX = process.env.PREFIX
+const TOKEN = process.env.TOKEN
+const DATABASE_URL = process.env.DATABASE_URL
+const TZ = process.env.TZ
 
 exports.PREFIX = PREFIX
 exports.TOKEN = TOKEN

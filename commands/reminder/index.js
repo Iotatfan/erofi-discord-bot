@@ -1,4 +1,4 @@
 module.exports = {
-    addReminder: require('./addReminder'),
-    listReminder: require('./listReminder')
+  addReminder: require('./addReminder'),
+  listReminder: require('./listReminder')
 }

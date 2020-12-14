@@ -1,22 +1,25 @@
-const Discord = require('discord.js')
-
 module.exports = {
-    name: 'Help',
-    usage: 'help',
-    description: 'List of useful command',
-    execute(message, options ,client) {
-        let commandsArray = client.commands.array()
-        // console.log(commandsArray)
-        
-        let embed = new Discord.MessageEmbed()
-            .setTitle('Command List')
-            .setColor('00FF00')
+  name: 'Help',
+  usage: 'help',
+  description: 'List of useful command',
+  execute (message, options, client) {
+    const commandsArray = client.commands.array()
 
+    const toSend = {
+      embed: {
+        title: 'Command List',
+        color: '00FF00',
+        fields: []
+      }
+    }
 
-        commandsArray.forEach( (command, index) => {
-            embed.addField(`${index+1}. ${command.name}`, `${command.description}`, false)
-        })
+    commandsArray.forEach((command, index) => {
+      toSend.embed.fields.push({
+        name: `${index + 1}. ${command.name}`,
+        value: `${command.description}`
+      })
+    })
 
-        message.channel.send(embed)
-    }    
+    message.channel.send(toSend)
+  }
 }

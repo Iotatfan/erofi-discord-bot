@@ -1,5 +1,7 @@
 node_modules
 .env
+.vscode
+.eslintrc.json
 ffmpeg.exe
 ffplay.exe
 ffprobe.exe

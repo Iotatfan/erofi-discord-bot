@@ -1,22 +1,20 @@
 module.exports = {
-    name: 'usersExtractor',
-    description: 'convert users string into array',
-    execute(mention) {
+  name: 'usersExtractor',
+  description: 'convert users string into array',
+  execute (mention) {
+    if (!mention) return
 
-        if (!mention) return
+    if (mention.startsWith('{') && mention.endsWith('}')) {
+      mention = mention.slice(1, -1)
+      mention = mention.split(',')
+      const users = []
 
-        if (mention.startsWith('{') && mention.endsWith('}')) {
+      mention.forEach(user => {
+        user = user.slice(1, -1)
+        users.push(user)
+      })
 
-            mention = mention.slice(1, -1)
-            mention = mention.split(',')
-            var users = []
-
-            mention.forEach(user => {
-                user = user.slice(1,-1)
-                users.push(user)
-            });
-            
-            return users
-        } else return mention
-    }
+      return users
+    } else return mention
+  }
 }

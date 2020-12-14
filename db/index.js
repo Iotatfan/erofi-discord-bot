@@ -1,4 +1,4 @@
-const { Pool } = require('pg');
+const { Pool } = require('pg')
 const { DATABASE_URL } = require('../config/config')
 
 const pool = new Pool({
@@ -6,14 +6,14 @@ const pool = new Pool({
   ssl: {
     rejectUnauthorized: false
   }
-});
+})
 
-pool.connect();
+pool.connect()
 
 console.log('Connecting to db . . . . .')
 
 module.exports = {
-    query: (text, params, callback) => {
-        return pool.query(text, params, (callback))
-    }
+  query: (text, params, callback) => {
+    return pool.query(text, params, (callback))
+  }
 }
