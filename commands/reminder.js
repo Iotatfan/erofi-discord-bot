@@ -8,7 +8,9 @@ const usage = 'remind'
 module.exports = {
     name: 'Bot Reminder',
     usage: usage,
-    description: `Let the bot remind you \n**${PREFIX}${usage} list** \n**${PREFIX}${usage} [message] <day> <time> [tag_channel] <tag_user>**`,
+    description: `Let the bot remind you
+                    **${PREFIX}${usage} list**
+                    **${PREFIX}${usage} [message] <day> <time> [tag_channel] <tag_user>**`,
     execute(message, options, client) {
         const subCommand = options[0]
 

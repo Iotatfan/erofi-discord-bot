@@ -8,7 +8,9 @@ const usage = 'booru'
 module.exports = {
     name: 'Booru Image Search',
     usage: booru,
-    description: `Search image from booru sites \n **${PREFIX}${usage} [booru_tag] <lewd/safe>** \n **${PREFIX}${usage} auto [booru_tag] [channel] <lewd/safe>**`,
+    description: `Search image from booru sites
+                    **${PREFIX}${usage} [booru_tag] <lewd/safe>** 
+                    **${PREFIX}${usage} auto [booru_tag] [channel] <lewd/safe>**`,
     execute(message, options, client) {
         console.log('Params ' + options)
         // Refactor Later

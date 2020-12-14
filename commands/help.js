@@ -3,7 +3,7 @@ const Discord = require('discord.js')
 module.exports = {
     name: 'Help',
     usage: 'help',
-    description: 'List of usefull command',
+    description: 'List of useful command',
     execute(message, options ,client) {
         let commandsArray = client.commands.array()
         // console.log(commandsArray)

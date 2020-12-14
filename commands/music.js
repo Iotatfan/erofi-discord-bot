@@ -7,9 +7,9 @@ module.exports = {
     name: 'Play Music',
     usage: usage,
     description: `Stream music from youtube \n**${PREFIX}${usage} [yt_link]**
-                    \n**${PREFIX}${usage} skip** to skip 
-                    \n**${PREFIX}${usage} stop** to stop
-                    \n**${PREFIX}${usage} list** to show queue list`,
+                    *${PREFIX}${usage} skip** to skip 
+                    **${PREFIX}${usage} stop** to stop
+                    **${PREFIX}${usage} list** to show queue list`,
     async execute(message, options, client) {
 
         const subCommand = options[0]
