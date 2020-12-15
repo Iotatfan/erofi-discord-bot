@@ -18,7 +18,7 @@
   "homepage": "https://github.com/Iotatfan/erofi-discord-bot#readme",
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
-    "booru": "^2.3.2",
+    "booru": "^2.4.0",
     "cronstrue": "^1.100.0",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
