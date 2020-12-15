@@ -14,15 +14,12 @@ module.exports = {
   execute (message, options, client) {
     const subCommand = options[0]
 
-    // move schedule, list, add to course forlder
-
     const server = message.guild.id
-    // console.log(server)
 
     if (subCommand === 'list') {
-      listReminder.execute(message, server)
+      listReminder(message, server)
     } else {
-      addReminder.execute(message, options, client, server)
+      addReminder(message, options, client, server)
     }
   }
 }

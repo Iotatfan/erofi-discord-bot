@@ -5,8 +5,6 @@ const ytsr = require('ytsr')
 const queue = new Map()
 let queueConstruct = null
 
-// Refactor Later
-
 module.exports = {
   name: 'play',
   async check (voiceChannel, message, query) {
@@ -43,7 +41,6 @@ module.exports = {
     }
   },
   async parseVideo (url, message) {
-    console.log('Parse Video')
     const songInfo = await ytdl.getInfo(url)
 
     const song = {
@@ -56,7 +53,6 @@ module.exports = {
     message.channel.send(`Added to queue : **${song.title}**`)
   },
   async parsePlaylist (url, message) {
-    console.log('Parse Playlist')
     const playlistID = await ytpl.getPlaylistID(url)
     const playlist = await ytpl(playlistID)
     playlist.items.forEach(video => {
@@ -70,8 +66,6 @@ module.exports = {
     message.channel.send('Playlist added to queue')
   },
   async search (text, message) {
-    console.log(`Searcing for ${text}`)
-
     const filters1 = await ytsr.getFilters(text)
     const filter1 = filters1.get('Type').get('Video')
     const options = {
@@ -101,21 +95,16 @@ module.exports = {
           serverQueue.connection = conn
           this.play(serverQueue.songs[0], message)
         })
-
-      // let connection = serverQueue.vc.join()
     }
   },
   play (song, message) {
     const serverQueue = queue.get(message.guild.id)
-    // console.log(serverQueue.connection)
 
     if (!song) {
       serverQueue.vc.leave()
       queue.delete(message.guild.id)
       return
     }
-
-    console.log(song)
 
     serverQueue.connection
       .play(ytdl(song.url, {
@@ -134,12 +123,21 @@ module.exports = {
 
         this.play(serverQueue.songs[0], message)
       })
-    console.log('Playing music')
-    message.channel.send(`Playing : **${song.title}**`)
+
+    const toSend = {
+      embed: {
+        title: `Playing : **${song.title}**`,
+        url: song.url,
+        image: {
+          url: song.thumbnail
+        }
+      }
+    }
+
+    message.channel.send(toSend)
   },
   skip (message) {
     const serverQueue = queue.get(message.guild.id)
-    // const { connection } = serverQueue
     console.log('Skipping song')
     serverQueue.connection.dispatcher.end()
   },
@@ -158,10 +156,8 @@ module.exports = {
       songs[i] = songs[j]
       songs[j] = temp
     }
-    // console.log(songs[1])
   },
   list (message) {
-    // console.log(queue)
     const serverQueue = queue.get(message.guild.id)
     const { songs } = serverQueue
 

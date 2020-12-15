@@ -13,11 +13,13 @@ module.exports = {
       }
     }
 
-    commandsArray.forEach((command, index) => {
-      toSend.embed.fields.push({
-        name: `${index + 1}. ${command.name}`,
-        value: `${command.description}`
-      })
+    commandsArray.forEach((command) => {
+      if (command.name !== 'Help') {
+        toSend.embed.fields.push({
+          name: `${command.name}`,
+          value: `${command.description}`
+        })
+      }
     })
 
     message.channel.send(toSend)

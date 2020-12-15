@@ -7,10 +7,9 @@ module.exports = {
   description: 'Show user avatar \n**~ava <tag_user>**',
   execute (message, options, client) {
     let attachment = null
-    if (options !== '') {
+    if (options.length > 0) {
       options.forEach(mentioned => {
-        console.log('Mentioned = ' + mentioned)
-        const user = client.users.cache.get(getUserFromMention.execute(mentioned))
+        const user = client.users.cache.get(getUserFromMention(mentioned))
         if (!user) {
           return message.reply('Not a Valid User')
         }

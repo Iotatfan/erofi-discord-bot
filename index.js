@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
-const { PREFIX, TOKEN } = require('./config/config')
 const fs = require('fs')
+const { PREFIX, TOKEN } = require('./config/config')
 const { cronReminder } = require('./db/reminderdb')
 const { cronBooru } = require('./db/autoboorudb')
 const { scheduleReminder, scheduleBooru } = require('./utils')
@@ -26,14 +26,14 @@ client.once('ready', () => {
       console.log(err)
     }
     const data = res.rows
-    scheduleReminder.execute(data, client)
+    scheduleReminder(data, client)
     console.log('Scheduling Reminder Done')
   })
   cronBooru((err, res) => {
     if (err) console.log(err)
     else {
       const data = res.rows
-      scheduleBooru.execute(null, data, client)
+      scheduleBooru(null, data, client)
       console.log('Booru Scheduling Done')
     }
   })
@@ -46,11 +46,8 @@ client.on('message', message => {
 
   const commandBody = message.content.slice(PREFIX.length)
   const args = commandBody.split(' ')
-  // console.log(args[1])
   const command = args.shift().toLowerCase()
-  // console.log(command)
   const options = args.splice(0, args.length)
-  // var attachment = null
 
   if (!client.commands.has(command)) return
 

@@ -1,7 +1,7 @@
 const { play } = require('./music/')
 const { PREFIX } = require('../config/config')
 
-const usage = 'play'
+const usage = 'pm'
 
 module.exports = {
   name: 'Play Music',

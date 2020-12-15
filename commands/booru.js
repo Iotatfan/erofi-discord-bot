@@ -12,33 +12,31 @@ module.exports = {
                     **${PREFIX}${usage} [booru_tag] <lewd/safe>** 
                     **${PREFIX}${usage} auto [booru_tag] [channel] <lewd/safe>**`,
   execute (message, options, client) {
-    console.log('Params ' + options)
-    // Refactor Later
     const tags = options[0]
     let targetCh = null
 
     if (!options[2]) targetCh = message.channel.id
-    else targetCh = options[2].startsWith('<#') ? getChannel.execute(options[2]) : message.channel.id
+    else targetCh = options[2].startsWith('<#') ? getChannel(options[2]) : message.channel.id
 
     const server = message.guild.id
 
-    let sauce = options[3] != null ? options[3] : 'safe'
+    let rating = options[3] != null ? options[3] : 'safe'
 
     if (options[1] === 'auto') {
-      const values = [targetCh, tags, server, sauce]
+      const values = [targetCh, tags, server, rating]
       addBooru(values, (err, res) => {
         if (err) {
           console.log(err)
           message.channel.send('Searching images failed succesfully :(')
         } else {
           const data = res.rows
-          scheduleBooru.execute(message, data, client, sauce)
+          scheduleBooru(message, data, client, rating)
           message.channel.send('Added to List')
         }
       })
     } else {
-      sauce = options[1]
-      booru.execute(message, targetCh, tags, client, sauce)
+      rating = options[1]
+      booru(message, targetCh, tags, client, rating)
     }
   }
 }
