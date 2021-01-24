@@ -9,9 +9,7 @@ module.exports = function (data, client) {
     cron.schedule(
       row.crontime,
       function () {
-        let message = `Saatnya ${row.course}`
-
-        if (row.course === 'TA' || row.course === 'Pra-TA') message = `Saatnya mengerjakan ${row.course}`
+        let message = `${row.course}`
 
         if (users) message = `${message} ${users}`
 

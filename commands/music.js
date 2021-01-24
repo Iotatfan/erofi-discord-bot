@@ -1,13 +1,13 @@
 const { play } = require('./music/')
 const { PREFIX } = require('../config/config')
 
-const usage = 'pm'
+const usage = 'p'
 
 module.exports = {
-  name: 'Play Music',
+  name: 'Music Player',
   usage: usage,
   description: `Stream music from youtube 
-                **${PREFIX}${usage} [yt_link]**
+                **${PREFIX}${usage} [yt_link / search_string]**
                 **${PREFIX}${usage} skip** to skip 
                 **${PREFIX}${usage} stop** to stop
                 **${PREFIX}${usage} list** to show queue list`,
@@ -35,5 +35,6 @@ module.exports = {
     }
 
     play.check(voiceChannel, message, subCommand)
+    console.log(play.serverQueue)
   }
 }

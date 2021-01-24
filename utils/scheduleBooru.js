@@ -7,7 +7,7 @@ module.exports = function (message, data, client, rating) {
     cron.schedule(
       '0 6-20/2 * * *', // Change it to dynamic later
       function () {
-        booru(message, row.channel, row.tag, client, rating)
+        booru(message, row.channel, row.tag, client, row.rating)
       },
       {
         scheduled: true,

@@ -1,9 +1,11 @@
 const Discord = require('discord.js')
 const fs = require('fs')
+
 const { PREFIX, TOKEN } = require('./config/config')
+
 const { cronReminder } = require('./db/reminderdb')
 const { cronBooru } = require('./db/autoboorudb')
-const { scheduleReminder, scheduleBooru } = require('./utils')
+const { scheduleReminder, scheduleBooru, slash } = require('./utils')
 
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
@@ -16,7 +18,7 @@ for (const file of commandFiles) {
   client.commands.set(command.usage, command)
 }
 
-client.once('ready', () => {
+client.on('ready', () => {
   client.user.setActivity('with Papa', {
     type: 'PLAYING'
   })
@@ -38,6 +40,8 @@ client.once('ready', () => {
     }
   })
 
+  // slash(client)
+
   console.log('I am ready!')
 })
 
@@ -56,19 +60,19 @@ client.on('message', message => {
     client.commands.get(command).execute(message, options, client)
   } catch (err) {
     console.log(err)
-    message.reply('Error executing command')
+    message.reply('Please enter the valid command')
   }
 })
 
-// client.on('messageDelete', message => {
-//   // if (message.author.bot) return
+client.on('messageDelete', message => {
+  // if (message.author.bot) return
 
-//   if (message.channel.id !== '734073050873725019') return
+  if (message.channel.id !== '734073050873725019') return
 
-//   const author = `<@!${message.author.id}>`
-//   console.log(author)
+  const author = `<@!${message.author.id}>`
+  console.log(author)
 
-//   message.channel.send(`${author} Says : ${message.content}`)
-// })
+  message.channel.send(`${author} Says : ${message.content}`)
+})
 
 client.login(TOKEN)

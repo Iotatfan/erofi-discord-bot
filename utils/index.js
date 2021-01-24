@@ -4,5 +4,6 @@ module.exports = {
   getChannel: require('./getChannel'),
   getUserFromMention: require('./getUserFromMention'),
   scheduleBooru: require('./scheduleBooru'),
-  scheduleReminder: require('./scheduleReminder')
+  scheduleReminder: require('./scheduleReminder'),
+  slash: require('./initSlash')
 }

@@ -7,22 +7,26 @@ const usage = 'booru'
 
 module.exports = {
   name: 'Booru Image Search',
-  usage: 'booru',
+  usage: usage,
   description: `Search image from booru sites
                     **${PREFIX}${usage} [booru_tag] <lewd/safe>** 
-                    **${PREFIX}${usage} auto [booru_tag] [channel] <lewd/safe>**`,
+                    **${PREFIX}${usage} [booru_tag] <lewd/safe> [channel] auto**`,
   execute (message, options, client) {
-    const tags = options[0]
+    let tags = options[0]
+    let rating = options[1]
     let targetCh = null
+
+    if (tags === 'safe' || tags === 'lewd') {
+      rating = tags
+      tags = ''
+    }
 
     if (!options[2]) targetCh = message.channel.id
     else targetCh = options[2].startsWith('<#') ? getChannel(options[2]) : message.channel.id
 
     const server = message.guild.id
 
-    let rating = options[3] != null ? options[3] : 'safe'
-
-    if (options[1] === 'auto') {
+    if (options.includes('auto')) {
       const values = [targetCh, tags, server, rating]
       addBooru(values, (err, res) => {
         if (err) {
@@ -35,7 +39,6 @@ module.exports = {
         }
       })
     } else {
-      rating = options[1]
       booru(message, targetCh, tags, client, rating)
     }
   }

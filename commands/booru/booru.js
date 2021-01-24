@@ -1,7 +1,7 @@
 const Booru = require('booru')
 const pxBaseLink = 'https://www.pixiv.net/en/artworks/'
 
-module.exports = async (message, targetCh, tags, client, rating = 'safe') => {
+module.exports = async (message, targetCh, tags, client, rating) => {
   switch (rating) {
     case 'safe':
       rating = 'rating:safe'
@@ -10,7 +10,11 @@ module.exports = async (message, targetCh, tags, client, rating = 'safe') => {
       rating = 'rating:explicit'
       break
     default:
-      rating = 'rating:safe'
+      rating = ''
+  }
+  if (tags === '') {
+    tags = rating
+    rating = ''
   }
 
   try {
@@ -22,14 +26,18 @@ module.exports = async (message, targetCh, tags, client, rating = 'safe') => {
         random: true
       })
 
-    if (searchResult.posts.length < 1) return message.reply('Please make sure you the tag is correct')
-    else {
+    if (searchResult.posts.length < 1) {
+      // console.log(searchResult)
+      return message.channel.send('No result found, please make sure the tag is correct')
+    } else {
       let source = null
-      if (searchResult[0].source.includes('pximg')) {
-        const str = searchResult[0].source.split('/').pop().toString().split('_')
-        source = pxBaseLink + str[0]
-      } else {
-        source = searchResult[0].source
+      if (searchResult[0].source) {
+        if (searchResult[0].source.includes('pximg')) {
+          const str = searchResult[0].source.split('/').pop().toString().split('_')
+          source = pxBaseLink + str[0]
+        } else {
+          source = searchResult[0].source
+        }
       }
 
       const toSend = {

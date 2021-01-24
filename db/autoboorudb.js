@@ -7,7 +7,7 @@ module.exports = {
     return db.query(text, null, callback)
   },
   addBooru (params, callback) {
-    const text = 'insert into autobooru(channel, tag, server, source) values($1, $2, $3, $4) returning *'
+    const text = 'insert into autobooru(channel, tag, server, rating) values($1, $2, $3, $4) returning *'
 
     return db.query(text, params, callback)
   },

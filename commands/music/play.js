@@ -81,7 +81,7 @@ module.exports = {
       thumbnail: searchResults[0].bestThumbnail.url
     }
     this.queue(song, message)
-    message.channel.send('Song added to queue')
+    message.channel.send(`Added to queue : **${song.title}**`)
   },
   async queue (song, message) {
     const serverQueue = queue.get(message.guild.id)
@@ -126,9 +126,10 @@ module.exports = {
 
     const toSend = {
       embed: {
-        title: `Playing : **${song.title}**`,
+        color: '00FF00',
+        title: `Playing: **${song.title}**`,
         url: song.url,
-        image: {
+        thumbnail: {
           url: song.thumbnail
         }
       }
@@ -146,8 +147,8 @@ module.exports = {
     const { songs } = serverQueue
 
     if (songs.length < 3) return
-    console.log(songs.length)
-    console.log('Shuffling queue')
+    // console.log(songs.length)
+    // console.log('Shuffling queue')
     message.channel.send('Shuffling queue')
 
     for (let i = songs.length - 1; i > 1; --i) {
@@ -186,5 +187,6 @@ module.exports = {
     console.log('Stopping Music')
     serverQueue.songs = []
     serverQueue.connection.dispatcher.end()
-  }
+  },
+  serverQueue: this.serverQueue
 }
